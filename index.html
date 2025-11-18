@@ -136,7 +136,17 @@
             <h2>Ajouter un Employés</h2>
 
             <div class="formInput"><input id="nameInput" type="text" placeholder="Nom"/></div>
-            <div class="formInput"><input id="roleInput" type="text" placeholder="Role"/></div>
+            <div class="formInput">
+                <select id="roleSelect">
+                    <option value="" disabled selected hidden>Choisir un rôle</option>
+                    <option>Réceptionniste(e)</option>
+                    <option value="Technicien IT">Technicien IT</option>
+                    <option value="sécurité">Agents de sécurité</option>
+                    <option value="Manager">Manager</option>
+                    <option value="Nettoyage">Nettoyage</option>
+                    <option value="Autres rôle">Autres rôle</option>
+                </select>
+            </div>
             <div class="formInput"><input id="photoInput" type="text" placeholder="Photo (URL)" /></div>
             <div class="formInput"><input id="emailInput" type="email" placeholder="Email"/></div>
             <div class="formInput"><input id="phoneInput" type="text" placeholder="Phone"/></div>

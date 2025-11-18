@@ -11,7 +11,6 @@ let nonEffectueArray = [];
 ///=====>>>> for open the big form <<<<=====\\\
 openForm.addEventListener("click", function () {
   bigModal.classList.remove("hideModel")
-
 })
 ///=====>>>> for close the big form <<<<=====\\\
 cancelButtonForm.addEventListener("click", function () {
@@ -59,13 +58,13 @@ function removeExperience(btn) {
 ajouterButtonForm.addEventListener("click", function () {
   /// big form input variable
   const nameInput = document.getElementById("nameInput").value.trim();
-  const roleInput = document.getElementById("roleInput").value.trim();
+  const roleSelect = document.getElementById("roleSelect").value.trim();
   const photoInput = document.getElementById("photoInput").value.trim();
   const emailInput = document.getElementById("emailInput").value.trim();
   const phneInput = document.getElementById("phoneInput").value.trim();
 
   let divContainCard = document.createElement("div");
-  divContainCard.className = "divCaontainCard";
+  divContainCard.className = "divContainCard";
 
   let cardPhoto = document.createElement("img");
   cardPhoto.src = photoInput || "./assets/avatar.png";
@@ -80,11 +79,10 @@ ajouterButtonForm.addEventListener("click", function () {
   cardName.textContent = nameInput;
   nameAndRoleContainer.appendChild(cardName);
 
-
-
-
-
-
+  let cardRole = document.createElement("p");
+  cardRole.textContent = roleSelect;
+  cardRole.className = "cardRole"
+  nameAndRoleContainer.appendChild(cardRole);
 
   nonEffectueContainer.appendChild(divContainCard);
 
