@@ -1,0 +1,265 @@
+// ===>> DOM Elements
+const experienceOpenButton = document.getElementById("experienceOpenFormButton");
+const bigModal = document.querySelector(".modal");
+const experienceForm = document.getElementById("experienceForm");
+const openForm = document.querySelector(".ajouterButton");
+const cancelButtonForm = document.getElementById("cancelButtonForm");
+const ajouterButtonForm = document.getElementById("ajouterButtonForm");
+
+const nonEffectueContainer = document.getElementById("nonEffeContain");
+const moreInfoAssignPopup = document.getElementById("moreInfoAssignPopup");
+const moreInfoPopupList = document.getElementById("moreInfoPopupList");
+
+const assignPopup = document.getElementById("assignPopup");
+const popupList = document.getElementById("popupList");
+const fermerPopup = document.getElementById("fermerPopup");
+const rooms = document.querySelectorAll(".roomCard");
+
+let nonEffectueArray = [];
+let experienceArray = [];
+
+const roomRoles = [
+    ["Manager", "Nettoyage"],          // Salle de conférence
+    ["Technicien IT", "Manager"],    // Salle d'archives
+    ["Réceptionniste(e)", "Manager", "Nettoyage"],    // Réception
+    ["Manager", "Nettoyage", "Autres rôle", "Réceptionniste(e)", "sécurité", "Technicien IT"],   // Salle du personnel
+    ["Technicien IT", "Manager", "Nettoyage"],    // Salle des serveurs
+    ["sécurité", "Manager", "Nettoyage"]         // Salle de sécurité
+];
+
+///====> function for create card
+function createWorkerCard(worker) {
+    let divContainCard = document.createElement("div");
+    divContainCard.className = "divContainCard";
+
+    let cardPhoto = document.createElement("img");
+    cardPhoto.src = worker.photo || "./assets/avatar.png";
+    cardPhoto.className = "cardPhoto";
+    divContainCard.appendChild(cardPhoto);
+
+    let nameAndRoleContainer = document.createElement("div");
+    nameAndRoleContainer.className = "nameAndRoleContainer";
+    divContainCard.appendChild(nameAndRoleContainer);
+
+    let cardName = document.createElement("p");
+    cardName.textContent = worker.name;
+    cardName.className = "cardName"
+    nameAndRoleContainer.appendChild(cardName);
+
+    let roleAndIconContainer = document.createElement("div");
+    roleAndIconContainer.className = "roleAndIconContainer";
+    nameAndRoleContainer.appendChild(roleAndIconContainer);
+
+    let cardRole = document.createElement("p");
+    cardRole.textContent = worker.role;
+    cardRole.className = "cardRole"
+    roleAndIconContainer.appendChild(cardRole);
+
+    let moreIcon = document.createElement("img");
+    moreIcon.src = "./assets/More.png";
+    moreIcon.className = "moreIcon"
+    roleAndIconContainer.appendChild(moreIcon);
+
+    // add listener for more info
+    moreIcon.addEventListener("click", function () {
+        openMoreInfoModal(worker);
+    });
+
+    return divContainCard;
+}
+
+///==== function for create card inside rooms
+function createRoomWorkerCard(worker) {
+    let workerCard = document.createElement("div");
+    workerCard.className = "divContainCardInsideRoom";
+
+    workerCard.innerHTML =
+        `
+      <img class="cardPhotoInsideRoom" src="${worker.photo || './assets/avatar.png'}">
+      
+      
+        <p class="cardNameInsideRoom">${worker.name}</p>
+        <span class="closeBtnInsideRoom">X</span>
+      
+      
+          <p class="cardRoleInsideRoom">${worker.role}</p>
+          <img src="./assets/More.png" class="moreIcon">
+      
+    
+   `;
+
+    // =====> more info
+    const roomMoreIcon = workerCard.querySelector(".moreIcon");
+    roomMoreIcon.addEventListener("click", function () {
+        openMoreInfoModal(worker);
+    });
+
+    return workerCard;
+}
+
+///====> function for return card to sideBar
+function returnWorkerToNonEffectue(workerCard, worker) {
+
+    workerCard.remove();
+    worker.zone = null;
+
+    if (!nonEffectueArray.includes(worker)) {
+        nonEffectueArray.push(worker);
+    }
+
+    let newCard = createWorkerCard(worker);
+    nonEffectueContainer.appendChild(newCard);
+}
+
+experienceOpenButton.addEventListener("click", function () {
+    experienceForm.classList.toggle("showForm");
+});
+
+function confirmExperience() {
+    const job = document.getElementById("expJob").value;
+    const company = document.getElementById("expCompany").value;
+    const years = document.getElementById("expYears").value;
+
+    if (!job || !company || !years) {
+        alert("Veuillez remplir tous les champs de l'expérience.");
+        return;
+    }
+    const expId = Date.now();
+    experienceArray.push({
+        expId: expId,
+        jobName: job,
+        companyName: company,
+        periode: years
+    });
+
+    const expList = document.getElementById("expList");
+    const wrapper = document.createElement("div");
+    wrapper.className = "experienceItem";
+    wrapper.setAttribute("data-id", expId);
+
+    wrapper.innerHTML = `<strong>${job}</strong> — ${company} (${years})
+    <button class="removeExp" onclick="removeExperience(this)">X</button>`;
+
+    expList.appendChild(wrapper);
+
+    document.getElementById("expJob").value = "";
+    document.getElementById("expCompany").value = "";
+    document.getElementById("expYears").value = "";
+}
+
+function removeExperience(btn) {
+    let item = btn.parentElement;
+    let id = Number(item.getAttribute("data-id"));
+    experienceArray = experienceArray.filter(exp => exp.expId !== id);
+    item.remove();
+}
+openForm.addEventListener("click", function () {
+    bigModal.classList.remove("hideModel");
+});
+
+cancelButtonForm.addEventListener("click", function () {
+    // clear inputs
+    document.getElementById("nameInput").value = "";
+    document.getElementById("roleSelect").value = "";
+    document.getElementById("photoInput").value = "";
+    document.getElementById("emailInput").value = "";
+    document.getElementById("phoneInput").value = "";
+    document.getElementById("expList").innerHTML = "";
+    experienceArray = [];
+    document.getElementById("expJob").value = "";
+    document.getElementById("expCompany").value = "";
+    document.getElementById("expYears").value = "";
+    bigModal.classList.add("hideModel");
+});
+
+ajouterButtonForm.addEventListener("click", function () {
+    const worker = {
+        name: document.getElementById("nameInput").value.trim(),
+        role: document.getElementById("roleSelect").value.trim(),
+        photo: document.getElementById("photoInput").value.trim(),
+        email: document.getElementById("emailInput").value.trim(),
+        phone: document.getElementById("phoneInput").value.trim(),
+        experience: [...experienceArray],
+        zone: null
+    };
+
+    nonEffectueArray.push(worker);
+    nonEffectueContainer.appendChild(createWorkerCard(worker));
+
+    // reset form
+    document.getElementById("nameInput").value = "";
+    document.getElementById("roleSelect").value = "";
+    document.getElementById("photoInput").value = "";
+    document.getElementById("emailInput").value = "";
+    document.getElementById("phoneInput").value = "";
+    document.getElementById("expList").innerHTML = "";
+    experienceArray = [];
+
+    bigModal.classList.add("hideModel");
+});
+
+rooms.forEach((room, index) => {
+    let plusButton = room.querySelector(".selectIcon");
+
+    plusButton.addEventListener("click", function () {
+        assignPopup.classList.remove("hidePopup");
+        popupList.innerHTML = "";
+
+        let roomRole = roomRoles[index];
+
+        nonEffectueArray.forEach(worker => {
+            if (worker.zone === null && roomRole.includes(worker.role)) {
+                let workerDiv = createWorkerCard(worker);
+                popupList.appendChild(workerDiv);
+
+                workerDiv.addEventListener("click", function () {
+                    let workerCard = createRoomWorkerCard(worker);
+                    room.querySelector(".effectWorkersContainer").appendChild(workerCard);
+
+                    let originalCard = Array.from(nonEffectueContainer.children).find(
+                        card => card.querySelector("p").textContent === worker.name
+                    );
+                    if (originalCard) originalCard.remove();
+
+                    worker.zone = index;
+                    nonEffectueArray = nonEffectueArray.filter(w => w !== worker);
+                    workerDiv.remove();
+
+                    const closeBtn = workerCard.querySelector(".closeBtnInsideRoom");
+                    closeBtn.addEventListener("click", function () {
+                        returnWorkerToNonEffectue(workerCard, worker);
+                    });
+
+                    assignPopup.classList.add("hidePopup");
+                });
+            }
+        });
+    });
+});
+
+fermerPopup.addEventListener("click", function () {
+    assignPopup.classList.add("hidePopup");
+});
+
+function openMoreInfoModal(worker) {
+    document.getElementById("moreInfoPhoto").src = worker.photo || "./assets/avatar.png";
+    document.getElementById("moreInfoName").textContent = worker.name;
+    document.getElementById("moreInfoRole").textContent = "Role : " + worker.role;
+    document.getElementById("moreInfoEmail").textContent = "Email : " + worker.email;
+    document.getElementById("moreInfoPhone").textContent = "Phone : " + worker.phone;
+
+    const expContainer = document.getElementById("moreInfoExpList");
+    expContainer.innerHTML = "";
+    worker.experience.forEach(exp => {
+        let item = document.createElement("div");
+        item.textContent = `${exp.jobName} — ${exp.companyName} (${exp.periode})`;
+        expContainer.appendChild(item);
+    });
+
+    document.getElementById("moreInfoModal").classList.remove("hidePopup");
+}
+
+document.getElementById("closeMoreInfo").addEventListener("click", function () {
+    document.getElementById("moreInfoModal").classList.add("hidePopup");
+});
+

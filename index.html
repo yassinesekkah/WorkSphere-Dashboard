@@ -25,7 +25,6 @@
                         <p>Employés non affectés</p>
                     </div>
                     <div class="nonEffectueContainer" id="nonEffeContain">
-
                     </div>
                 </div>
             </div>
@@ -42,26 +41,17 @@
                     <h3>Salle de conférence</h3>
                     <div class="iconAndSelect">
                         <img src="./assets/plusButton.png" class="selectIcon">
-                        <select class="hiddenSelect">
-                            <option>Lorem, ipsum.</option>
-                            <option>Lorem, ipsum.</option>
-                            <option>Lorem, ipsum.</option>
-                        </select>
+
                     </div>
                 </div>
                 <div class="effectWorkersContainer"></div>
             </div>
 
-            <div class="roomCard2 roomCard">
+            <div class="roomCard2 roomCard" id="archivesRoom">
                 <div class="roomCardTitleAndSelect">
                     <h3>Salle d'archives</h3>
                     <div class="iconAndSelect">
                         <img src="./assets/plusButton.png" class="selectIcon">
-                        <select class="hiddenSelect">
-                            <option>Lorem, ipsum.</option>
-                            <option>Lorem, ipsum.</option>
-                            <option>Lorem, ipsum.</option>
-                        </select>
                     </div>
                 </div>
                 <div class="effectWorkersContainer"></div>
@@ -72,11 +62,7 @@
                     <h3>Réception</h3>
                     <div class="iconAndSelect">
                         <img src="./assets/plusButton.png" class="selectIcon">
-                        <select class="hiddenSelect">
-                            <option>Lorem, ipsum.</option>
-                            <option>Lorem, ipsum.</option>
-                            <option>Lorem, ipsum.</option>
-                        </select>
+
                     </div>
                 </div>
                 <div class="effectWorkersContainer"></div>
@@ -87,15 +73,10 @@
                     <h3>Salle du personnel</h3>
                     <div class="iconAndSelect">
                         <img src="./assets/plusButton.png" class="selectIcon">
-                        <select class="hiddenSelect">
-                            <option>Lorem, ipsum.</option>
-                            <option>Lorem, ipsum.</option>
-                            <option>Lorem, ipsum.</option>
-                        </select>
+
                     </div>
                 </div>
-                <div class="effectWorkersContainer">Lorem, ipsum dolor sit amet consectetur adipisicing elit. Optio,
-                    corporis magni quas voluptates ea pariatur.</div>
+                <div class="effectWorkersContainer"></div>
             </div>
 
             <div class="roomCard5 roomCard">
@@ -103,26 +84,18 @@
                     <h3>Salle des serveurs</h3>
                     <div class="iconAndSelect">
                         <img src="./assets/plusButton.png" class="selectIcon">
-                        <select class="hiddenSelect">
-                            <option>Lorem, ipsum.</option>
-                            <option>Lorem, ipsum.</option>
-                            <option>Lorem, ipsum.</option>
-                        </select>
+
                     </div>
                 </div>
                 <div class="effectWorkersContainer"></div>
             </div>
 
-            <div class="roomCard6 roomCard">
+            <div class="roomCard6 roomCard" id="securityRoom">
                 <div class="roomCardTitleAndSelect">
                     <h3>Salle de sécurité</h3>
                     <div class="iconAndSelect">
                         <img src="./assets/plusButton.png" class="selectIcon">
-                        <select class="hiddenSelect">
-                            <option>Lorem, ipsum.</option>
-                            <option>Lorem, ipsum.</option>
-                            <option>Lorem, ipsum.</option>
-                        </select>
+
                     </div>
                 </div>
                 <div class="effectWorkersContainer"></div>
@@ -131,11 +104,11 @@
     </div>
 
     <!--add new worker-->
-    <div class="modal hideModel" >
+    <div class="modal hideModel">
         <div class="modalContent">
             <h2>Ajouter un Employés</h2>
 
-            <div class="formInput"><input id="nameInput" type="text" placeholder="Nom"/></div>
+            <div class="formInput"><input id="nameInput" type="text" placeholder="Nom" /></div>
             <div class="formInput">
                 <select id="roleSelect">
                     <option value="" disabled selected hidden>Choisir un rôle</option>
@@ -148,8 +121,8 @@
                 </select>
             </div>
             <div class="formInput"><input id="photoInput" type="text" placeholder="Photo (URL)" /></div>
-            <div class="formInput"><input id="emailInput" type="email" placeholder="Email"/></div>
-            <div class="formInput"><input id="phoneInput" type="text" placeholder="Phone"/></div>
+            <div class="formInput"><input id="emailInput" type="email" placeholder="Email" /></div>
+            <div class="formInput"><input id="phoneInput" type="text" placeholder="Phone" /></div>
 
             <!-- EXPERIENCES -->
             <div class="experiencesContainer">
@@ -175,7 +148,34 @@
             </div>
         </div>
     </div>
-    <script src="./script.js"></script>
+    <!-- popup pour effectue workers-->
+    <div class="popup hidePopup" id="assignPopup">
+        <div class="popupContent">
+            <h3>Choisir un employé</h3>
+            <div id="popupList">
+
+            </div>
+            <button id="fermerPopup">Annuler</button>
+        </div>
+    </div>
+
+    <!-- popup for display workers iformations-->
+    <div id="moreInfoModal" class="hidePopup moreInfoModal">
+        <div class="modalContent">
+            <span id="closeMoreInfo" class="closeBtn">X</span>
+
+            <img id="moreInfoPhoto" class="infoPhoto" src="" alt="photo">
+            <h2 id="moreInfoName"></h2>
+            <p id="moreInfoRole"></p>
+            <p id="moreInfoEmail"></p>
+            <p id="moreInfoPhone"></p>
+
+            <h3>Expériences :</h3>
+            <div id="moreInfoExpList"></div>
+        </div>
+    </div>
+
+    <script src="./factory-script.js"></script>
 </body>
 
 </html>
