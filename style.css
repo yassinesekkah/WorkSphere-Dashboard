@@ -618,6 +618,11 @@
             color: rgb(205, 45, 45);
         }
 
+        .errorMsg {
+            color: red;
+            font-size: 12px;
+        }
+
         @media (min-width: 1024px) and (max-width: 1279px) {
 
             /* petit d'ordinateur */
@@ -868,7 +873,7 @@
 
             .nonEffectuetListeTitle {
                 cursor: pointer;
-                background-color: #111827;  
+                background-color: #111827;
                 padding: 1rem;
                 border-radius: 10px;
                 display: flex;
@@ -880,7 +885,7 @@
 
             .nonEffectuetListeTitle:hover {
                 background-color: #0A1240;
-                
+
             }
 
             .nonEffectuetListeTitle img {
@@ -1065,6 +1070,7 @@
         }
 
         @media (max-width: 767px) {
+
             /* Styles pour mobile */
             .globalContainer {
                 display: grid;
@@ -1112,7 +1118,7 @@
 
             .nonEffectuetListeTitle {
                 cursor: pointer;
-                background-color: #111827;  
+                background-color: #111827;
                 padding: 1rem;
                 border-radius: 10px;
                 display: flex;
@@ -1124,7 +1130,7 @@
 
             .nonEffectuetListeTitle:hover {
                 background-color: #0A1240;
-                
+
             }
 
             .nonEffectuetListeTitle img {
@@ -1309,17 +1315,18 @@
 
 
             .logo {
-            display: flex;
-            align-items: center;
-            padding: .5rem 1rem;
-        }
+                display: flex;
+                align-items: center;
+                padding: .5rem 1rem;
+            }
 
-        .logo img {
-            width: 24px;
-            height: auto;
-        }
-        .logo h2{
-            font-size: 14px;
-        }
-        
+            .logo img {
+                width: 24px;
+                height: auto;
+            }
+
+            .logo h2 {
+                font-size: 14px;
+            }
+
         }

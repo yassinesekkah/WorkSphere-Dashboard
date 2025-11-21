@@ -171,8 +171,46 @@ cancelButtonForm.addEventListener("click", function () {
     document.getElementById("expYears").value = "";
     bigModal.classList.add("hideModel");
 });
+//====> regex validation
+const nameRegex = /^[A-Za-zÀ-ÖØ-öø-ÿ\s]{3,}$/;
+const emailRegex = /^[^@]+@[^@]+\.[a-zA-Z]{2,}$/;
+const phoneRegex = /^[0-9]{8,12}$/;
+
+
+// simple validation
+function validateForm() {
+    let name = document.getElementById("nameInput").value.trim();
+    let email = document.getElementById("emailInput").value.trim();
+    let phone = document.getElementById("phoneInput").value.trim();
+    let photo = document.getElementById("photoInput").value.trim();
+    let role = document.getElementById("roleSelect").value.trim();
+
+    let errors = "";
+
+    if (!nameRegex.test(name)) {
+        errors += "- Le nom doit contenir au moins 3 lettres.\n";
+    }
+    if (role === "") {
+        errors += "- Choisir un rôle.\n";
+    }
+    if (!emailRegex.test(email)) {
+        errors += "- Email invalide.\n";
+    }
+    if (!phoneRegex.test(phone)) {
+        errors += "- Numéro de téléphone invalide.\n";
+    }
+    if (errors !== "") {
+        alert(errors);
+        return false;
+    }
+    return true;
+}
+
 
 ajouterButtonForm.addEventListener("click", function () {
+     if (!validateForm()) {
+        return; 
+    }
     const worker = {
         name: document.getElementById("nameInput").value.trim(),
         role: document.getElementById("roleSelect").value.trim(),
