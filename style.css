@@ -14,10 +14,13 @@
                 linear-gradient(rgba(10, 14, 35, 0.7), rgba(6, 11, 40, 1.2)),
                 url(./assets/Background.png);
             background-repeat: no-repeat;
-
-
+            background-repeat: no-repeat;
+            background-size: cover;
+            background-position: top;
+            background-attachment: scroll;
             color: #dbd7d9;
             font-family: 'Plus Jakarta Sans', sans-serif;
+            overflow-x: hidden;
         }
 
         .globalContainer {
@@ -29,18 +32,16 @@
         .sideBar {
             grid-column: 1/3;
             grid-row: 1/13;
-
             display: flex;
             flex-direction: column;
             justify-content: space-between;
             align-items: center;
-
             height: 100vh;
             position: sticky;
             top: 0;
-
             box-shadow: 0 4px 12px rgba(0, 0, 0, .3);
             background: linear-gradient(90deg, var(--secondary), var(--primary));
+            position: relative;
 
             /* background-image: url(./assets/Menu.png);
             background-size: cover;
@@ -63,6 +64,13 @@
         .logo img {
             width: 42px;
             height: auto;
+        }
+
+        .nonEffectueListe {
+            position: absolute;
+            top: 100px;
+            left: .3rem;
+
         }
 
         .nonEffectuetListeTitle {
@@ -830,14 +838,14 @@
             .globalContainer {
                 display: grid;
                 grid-template-columns: repeat(12, 1fr);
-                grid-template-rows: auto 1fr;
-                gap: 1rem;
+                grid-template-rows: repeat(20, 1fr);
+
                 height: 100vh;
             }
 
             .sideBar {
                 grid-column: 1/13;
-                grid-row: 1/2;
+                grid-row: 1/3;
 
                 display: flex;
                 flex-direction: row;
@@ -861,20 +869,45 @@
                 align-items: center;
             }
 
+            .nonEffectueListe {
+                position: absolute;
+                top: 10px;
+                grid-column: 1/13;
+                grid-row: 3/6;
+                display: flex;
+                width: 100%;
+                gap: 1rem;
+
+                top: 100px;
+                left: .3rem;
+            }
+
+            .nonEffectueContainer {
+                display: flex;
+                overflow-x: scroll;
+                scrollbar-width: none;
+
+                -ms-overflow-style: none;
+
+                max-width: fit-content;
+                box-sizing: border-box;
+            }
+
             .roomsContainer {
                 grid-column: 1/13;
-                grid-row: 2/3;
+                grid-row: 6/21;
                 display: grid;
                 grid-template-columns: repeat(12, 1fr);
                 grid-template-rows: repeat(6, 1fr);
-                gap: .6rem;
-                padding: 4rem 1.5rem;
+                gap: .5rem;
+                padding: .5rem 1.5rem;
+
             }
 
             .nonEffectuetListeTitle {
                 cursor: pointer;
                 background-color: #111827;
-                padding: 1rem;
+                padding: .1rem;
                 border-radius: 10px;
                 display: flex;
                 align-items: center;
@@ -903,7 +936,7 @@
                 align-items: center;
                 padding: .4rem .2rem;
                 background-color: rgba(26, 31, 55, 1);
-                margin: .7rem .1rem;
+                margin: 0.1rem;
                 border-radius: 10px;
                 gap: .3rem;
                 cursor: pointer;
@@ -955,8 +988,12 @@
                 display: flex;
                 flex-direction: column;
                 gap: 1rem;
-                /* background: linear-gradient(135deg, var(--secondary), var(--primary) 100%); */
                 box-shadow: 0 4px 12px rgba(0, 0, 0, .3);
+                overflow-y: auto;
+                padding: .5rem;
+                -ms-overflow-style: none;
+                
+                scrollbar-width: none;
             }
 
             .roomCard .overlay {
@@ -1071,13 +1108,15 @@
 
         @media (max-width: 767px) {
 
-            /* Styles pour mobile */
+
             .globalContainer {
                 display: grid;
                 grid-template-columns: repeat(12, 1fr);
-                grid-template-rows: auto 1fr;
-                gap: 1rem;
-                height: 100vh;
+                grid-template-rows: repeat(30, 1fr);
+
+                background: linear-gradient(180deg, #0a0f2c 0%, #081028 40%, #040a1a 100%);
+
+
             }
 
             .sideBar {
@@ -1095,42 +1134,73 @@
 
                 box-shadow: 0 4px 12px rgba(0, 0, 0, .3);
                 background: linear-gradient(90deg, var(--secondary), var(--primary));
+                z-index: 10;
             }
 
             .sidebarTop {
                 display: flex;
                 flex-direction: row;
                 justify-content: space-between;
-                gap: rem;
-                padding-top: .3em;
+                gap: 3rem;
+                padding-top: .5rem;
                 align-items: center;
+            }
+
+            .nonEffectueListe {
+                position: absolute;
+                top: 10px;
+                grid-column: 1/13;
+                grid-row: 2/4;
+                display: flex;
+                width: 100%;
+                gap: .5rem;
+                top: 75px;
+                left: .3rem;
+            }
+
+            .nonEffectueContainer {
+                display: flex;
+                overflow-x: auto;
+                /* scroll ghir dkhel container */
+                scrollbar-width: none;
+                -ms-overflow-style: none;
+
+                width: 100%;
+                /* container ytb3a عرض الشاشة */
+                max-width: 100%;
+                /* manfoutch العرض */
+                box-sizing: border-box;
+            }
+
+            .nonEffectueContainer::-webkit-scrollbar {
+                display: none;
             }
 
             .roomsContainer {
                 grid-column: 1/13;
-                grid-row: 2/3;
-                display: grid;
-                grid-template-columns: repeat(12, 1fr);
-                grid-template-rows: repeat(6, 1fr);
-                gap: .6rem;
-                padding: 4rem 1.5rem;
+                grid-row: 3/31;
+                display: flex;
+                flex-direction: column;
+                gap: .5rem;
+                padding: .5rem 1.5rem;
+                margin-top: 1.2rem;
+
+
             }
 
             .nonEffectuetListeTitle {
                 cursor: pointer;
                 background-color: #111827;
-                padding: 1rem;
+                padding: .1rem;
                 border-radius: 10px;
                 display: flex;
                 align-items: center;
                 justify-content: center;
                 gap: .3rem;
-
             }
 
             .nonEffectuetListeTitle:hover {
                 background-color: #0A1240;
-
             }
 
             .nonEffectuetListeTitle img {
@@ -1148,47 +1218,48 @@
                 align-items: center;
                 padding: .4rem .2rem;
                 background-color: rgba(26, 31, 55, 1);
-                margin: .7rem .1rem;
+                margin: 0.1rem;
                 border-radius: 10px;
                 gap: .3rem;
                 cursor: pointer;
             }
 
             .cardPhoto {
-                width: 36px;
+                width: 24px;
                 height: auto;
             }
 
             .nameAndRoleContainer {
                 display: flex;
                 flex-direction: column;
-                gap: .3rem;
+                gap: .1rem;
                 align-items: center;
-                padding: .2rem .4rem;
+                padding: .1rem .2rem;
             }
 
             .roleAndIconContainer {
                 display: flex;
-                gap: 1.5rem;
+                gap: 1rem;
             }
 
             .cardRole {
-                font-size: 12px;
+                font-size: 10px;
                 color: gray;
             }
 
             .cardName {
-                font-size: 12px;
+                font-size: 10px;
             }
 
             .moreIcon {
                 grid-column: 6/9;
                 grid-row: 2/3;
                 width: fit-content;
-                max-width: max-content;
+                max-width: 19px;
                 justify-self: end;
                 cursor: pointer;
                 transition: 0.2s ease;
+
             }
 
             /*rooms grid*/
@@ -1199,6 +1270,7 @@
                 border-radius: 1rem;
                 display: flex;
                 flex-direction: column;
+                min-height: 250px;
                 gap: 1rem;
                 /* background: linear-gradient(135deg, var(--secondary), var(--primary) 100%); */
                 box-shadow: 0 4px 12px rgba(0, 0, 0, .3);
@@ -1256,8 +1328,8 @@
             }
 
             .roomCard1 {
-                grid-column: 1/13;
-                grid-row: 1/2;
+                grid-column: 1/5;
+                grid-row: 1/4;
                 background-image:
                     linear-gradient(rgba(10, 14, 35, .2), rgba(6, 11, 40, .8)),
                     url(./assets/roomsImgs/conference.png);
@@ -1265,8 +1337,8 @@
             }
 
             .roomCard2 {
-                grid-column: 1/13;
-                grid-row: 2/3;
+                grid-column: 5/9;
+                grid-row: 1/4;
                 background-image:
                     linear-gradient(rgba(10, 14, 35, 0.2), rgba(6, 11, 40, .8)),
                     url(./assets/roomsImgs/archieve.png);
@@ -1274,8 +1346,8 @@
             }
 
             .roomCard3 {
-                grid-column: 1/13;
-                grid-row: 3/4;
+                grid-column: 9/13;
+                grid-row: 1/4;
                 background-image:
                     linear-gradient(rgba(10, 14, 35, 0.2), rgba(6, 11, 40, .8)),
                     url(./assets/roomsImgs/reception.png);
@@ -1283,8 +1355,8 @@
             }
 
             .roomCard4 {
-                grid-column: 1/13;
-                grid-row: 4/5;
+                grid-column: 1/5;
+                grid-row: 4/7;
                 margin-top: .5rem;
                 background-image:
                     linear-gradient(rgba(10, 14, 35, 0.2), rgba(6, 11, 40, .8)),
@@ -1294,8 +1366,8 @@
             }
 
             .roomCard5 {
-                grid-column: 1/13;
-                grid-row: 5/6;
+                grid-column: 5/9;
+                grid-row: 4/7;
                 margin-top: .5rem;
                 background-image:
                     linear-gradient(rgba(10, 14, 35, 0.2), rgba(6, 11, 40, .8)),
@@ -1304,8 +1376,8 @@
             }
 
             .roomCard6 {
-                grid-column: 1/13;
-                grid-row: 6/7;
+                grid-column: 9/13;
+                grid-row: 4/7;
                 margin-top: .5rem;
                 background-image:
                     linear-gradient(rgba(10, 14, 35, 0.2), rgba(6, 11, 40, .8)),
@@ -1313,15 +1385,14 @@
                 background-size: cover;
             }
 
-
             .logo {
                 display: flex;
                 align-items: center;
-                padding: .5rem 1rem;
+                padding: .5rem .6rem;
             }
 
             .logo img {
-                width: 24px;
+                width: 22px;
                 height: auto;
             }
 
@@ -1329,4 +1400,30 @@
                 font-size: 14px;
             }
 
+            .ajouterButton {
+                display: flex;
+                align-items: center;
+                padding: .5rem .8rem;
+                background-color: rgba(26, 31, 55, 1);
+                margin: 1rem .3rem;
+                border-radius: 10px;
+                gap: .3rem;
+                cursor: pointer;
+                transition: all .25s ease;
+            }
+
+            .ajouterButton img {
+                width: 16px;
+                height: auto;
+            }
+
+            .ajouterButton p {
+                font-size: 12px;
+            }
+
+            .ajouterButton:hover {
+                background-color: #0A1240;
+                box-shadow: 0 4px 14px rgba(0, 0, 0, 0.25);
+                transform: translateY(-2px);
+            }
         }
