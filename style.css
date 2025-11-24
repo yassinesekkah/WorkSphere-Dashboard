@@ -836,10 +836,7 @@
         @media (min-width: 768px) and (max-width: 1023px) {
 
             .globalContainer {
-                display: grid;
-                grid-template-columns: repeat(12, 1fr);
                 grid-template-rows: repeat(20, 1fr);
-
                 height: 100vh;
             }
 
@@ -1108,15 +1105,9 @@
 
         @media (max-width: 767px) {
 
-
             .globalContainer {
-                display: grid;
-                grid-template-columns: repeat(12, 1fr);
                 grid-template-rows: repeat(30, 1fr);
-
                 background: linear-gradient(180deg, #0a0f2c 0%, #081028 40%, #040a1a 100%);
-
-
             }
 
             .sideBar {

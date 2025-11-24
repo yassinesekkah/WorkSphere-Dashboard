@@ -27,6 +27,71 @@ const roomRoles = [
     ["sécurité", "Manager", "Nettoyage"]         // Salle de sécurité
 ];
 
+///=====>>>> for open the big form <<<<=====\\\
+openForm.addEventListener("click", function () {
+    bigModal.classList.remove("hideModel");
+});
+///=====>>>> for close the big form <<<<=====\\\
+cancelButtonForm.addEventListener("click", function () {
+    // clear inputs
+    document.getElementById("nameInput").value = "";
+    document.getElementById("roleSelect").value = "";
+    document.getElementById("photoInput").value = "";
+    document.getElementById("emailInput").value = "";
+    document.getElementById("phoneInput").value = "";
+    document.getElementById("expList").innerHTML = "";
+    experienceArray = [];
+    document.getElementById("expJob").value = "";
+    document.getElementById("expCompany").value = "";
+    document.getElementById("expYears").value = "";
+    bigModal.classList.add("hideModel");
+});
+///=====>>>> for toggle the experience form <<<<=====\\\
+experienceOpenButton.addEventListener("click", function () {
+    experienceForm.classList.toggle("showForm");
+});
+
+///=====>>>> for add a new experience <<<<=====\\\
+function confirmExperience() {
+    const job = document.getElementById("expJob").value;
+    const company = document.getElementById("expCompany").value;
+    const years = document.getElementById("expYears").value;
+
+    if (!job || !company || !years) {
+        alert("Veuillez remplir tous les champs de l'expérience.");
+        return;
+    }
+    const expId = Date.now();
+    //===> experience object
+    experienceArray.push({
+        expId: expId,
+        jobName: job,
+        companyName: company,
+        periode: years
+    });
+
+    const expList = document.getElementById("expList");
+    const wrapper = document.createElement("div");
+    wrapper.className = "experienceItem";
+    wrapper.setAttribute("data-id", expId);
+
+    wrapper.innerHTML = `<strong>${job}</strong> — ${company} (${years})
+    <button class="removeExp" onclick="removeExperience(this)">X</button>`;
+
+    expList.appendChild(wrapper);
+
+    document.getElementById("expJob").value = "";
+    document.getElementById("expCompany").value = "";
+    document.getElementById("expYears").value = "";
+}
+///=====>>>> for remove experience <<<<=====\\\
+function removeExperience(btn) {
+    let item = btn.parentElement;
+    let id = Number(item.getAttribute("data-id"));
+    experienceArray = experienceArray.filter(exp => exp.expId !== id);
+    item.remove();
+}
+
 ///====> function for create card
 function createWorkerCard(worker) {
     let divContainCard = document.createElement("div");
@@ -60,6 +125,7 @@ function createWorkerCard(worker) {
     moreIcon.className = "moreIcon"
     roleAndIconContainer.appendChild(moreIcon);
 
+
     // add listener for more info
     moreIcon.addEventListener("click", function () {
         openMoreInfoModal(worker);
@@ -77,15 +143,11 @@ function createRoomWorkerCard(worker) {
         `
       <img class="cardPhotoInsideRoom" src="${worker.photo || './assets/avatar.png'}">
       
-      
-        <p class="cardNameInsideRoom">${worker.name}</p>
+        <p class="cardNameInsideRoom cardName">${worker.name}</p>
         <span class="closeBtnInsideRoom">X</span>
       
-      
-          <p class="cardRoleInsideRoom">${worker.role}</p>
-          <img src="./assets/More.png" class="moreIcon">
-      
-    
+        <p class="cardRoleInsideRoom cardRole">${worker.role}</p>
+        <img src="./assets/More.png" class="moreIcon">
    `;
 
     // =====> more info
@@ -111,78 +173,16 @@ function returnWorkerToNonEffectue(workerCard, worker) {
     nonEffectueContainer.appendChild(newCard);
 }
 
-experienceOpenButton.addEventListener("click", function () {
-    experienceForm.classList.toggle("showForm");
-});
-
-function confirmExperience() {
-    const job = document.getElementById("expJob").value;
-    const company = document.getElementById("expCompany").value;
-    const years = document.getElementById("expYears").value;
-
-    if (!job || !company || !years) {
-        alert("Veuillez remplir tous les champs de l'expérience.");
-        return;
-    }
-    const expId = Date.now();
-    experienceArray.push({
-        expId: expId,
-        jobName: job,
-        companyName: company,
-        periode: years
-    });
-
-    const expList = document.getElementById("expList");
-    const wrapper = document.createElement("div");
-    wrapper.className = "experienceItem";
-    wrapper.setAttribute("data-id", expId);
-
-    wrapper.innerHTML = `<strong>${job}</strong> — ${company} (${years})
-    <button class="removeExp" onclick="removeExperience(this)">X</button>`;
-
-    expList.appendChild(wrapper);
-
-    document.getElementById("expJob").value = "";
-    document.getElementById("expCompany").value = "";
-    document.getElementById("expYears").value = "";
-}
-
-function removeExperience(btn) {
-    let item = btn.parentElement;
-    let id = Number(item.getAttribute("data-id"));
-    experienceArray = experienceArray.filter(exp => exp.expId !== id);
-    item.remove();
-}
-openForm.addEventListener("click", function () {
-    bigModal.classList.remove("hideModel");
-});
-
-cancelButtonForm.addEventListener("click", function () {
-    // clear inputs
-    document.getElementById("nameInput").value = "";
-    document.getElementById("roleSelect").value = "";
-    document.getElementById("photoInput").value = "";
-    document.getElementById("emailInput").value = "";
-    document.getElementById("phoneInput").value = "";
-    document.getElementById("expList").innerHTML = "";
-    experienceArray = [];
-    document.getElementById("expJob").value = "";
-    document.getElementById("expCompany").value = "";
-    document.getElementById("expYears").value = "";
-    bigModal.classList.add("hideModel");
-});
-//====> regex validation
+//====> regex validation variables
 const nameRegex = /^[A-Za-zÀ-ÖØ-öø-ÿ\s]{3,}$/;
 const emailRegex = /^[^@]+@[^@]+\.[a-zA-Z]{2,}$/;
 const phoneRegex = /^[0-9]{8,12}$/;
 
-
-// simple validation
+//===> validation pour valide avec regex
 function validateForm() {
     let name = document.getElementById("nameInput").value.trim();
     let email = document.getElementById("emailInput").value.trim();
     let phone = document.getElementById("phoneInput").value.trim();
-    let photo = document.getElementById("photoInput").value.trim();
     let role = document.getElementById("roleSelect").value.trim();
 
     let errors = "";
@@ -196,9 +196,9 @@ function validateForm() {
     if (!emailRegex.test(email)) {
         errors += "- Email invalide.\n";
     }
-    if (!phoneRegex.test(phone)) {
-        errors += "- Numéro de téléphone invalide.\n";
-    }
+    // if (!phoneRegex.test(phone)) {
+    //     errors += "- Numéro de téléphone invalide.\n";
+    // }
     if (errors !== "") {
         alert(errors);
         return false;
@@ -208,8 +208,8 @@ function validateForm() {
 
 
 ajouterButtonForm.addEventListener("click", function () {
-     if (!validateForm()) {
-        return; 
+    if (!validateForm()) {
+        return;
     }
     const worker = {
         name: document.getElementById("nameInput").value.trim(),
@@ -236,33 +236,49 @@ ajouterButtonForm.addEventListener("click", function () {
     bigModal.classList.add("hideModel");
 });
 
-rooms.forEach((room, index) => {
+for (let i = 0; i < rooms.length; i++) {
+    let room = rooms[i];
     let plusButton = room.querySelector(".selectIcon");
 
     plusButton.addEventListener("click", function () {
+        //==> affichage dyal popup avec remove HidePopup class
         assignPopup.classList.remove("hidePopup");
+        //===> clear popup
         popupList.innerHTML = "";
-
-        let roomRole = roomRoles[index];
-
-        nonEffectueArray.forEach(worker => {
+        //==> kol room b role dyalha f array lfo9 msatfin bnafs indice number
+        let roomRole = roomRoles[i];
+        //===> boucle pour affichi les carts on the popUp
+        for (let j = 0; j < nonEffectueArray.length; j++) {
+            let worker = nonEffectueArray[j];
+            //==> condition pour filtre
             if (worker.zone === null && roomRole.includes(worker.role)) {
+                //==> creation d'affichage div
                 let workerDiv = createWorkerCard(worker);
                 popupList.appendChild(workerDiv);
 
                 workerDiv.addEventListener("click", function () {
+                    let roomContainerCards = room.querySelector(".effectWorkersContainer");
+                    // create card inside room
                     let workerCard = createRoomWorkerCard(worker);
-                    room.querySelector(".effectWorkersContainer").appendChild(workerCard);
+                    roomContainerCards.appendChild(workerCard);
 
-                    let originalCard = Array.from(nonEffectueContainer.children).find(
-                        card => card.querySelector("p").textContent === worker.name
-                    );
-                    if (originalCard) originalCard.remove();
+                    // remove from sidebar
+                    let sidebarCards = nonEffectueContainer.querySelectorAll(".divContainCard");
+                    for (let i = 0; i < sidebarCards.length; i++) {
+                        let div = sidebarCards[i];
+                        let name = div.querySelector("p").textContent;
+                        
+                        if (name === worker.name) {
+                            div.remove();
+                        }
+                    }
 
-                    worker.zone = index;
-                    nonEffectueArray = nonEffectueArray.filter(w => w !== worker);
-                    workerDiv.remove();
+                    // update arrays
+                    worker.zone = i;
+                    // nonEffectueArray = nonEffectueArray.filter(w => w !== worker);
+                    // workerDiv.remove();
 
+                    // close btn to return card to nonEffectue
                     const closeBtn = workerCard.querySelector(".closeBtnInsideRoom");
                     closeBtn.addEventListener("click", function () {
                         returnWorkerToNonEffectue(workerCard, worker);
@@ -271,9 +287,10 @@ rooms.forEach((room, index) => {
                     assignPopup.classList.add("hidePopup");
                 });
             }
-        });
+        }
     });
-});
+}
+
 
 fermerPopup.addEventListener("click", function () {
     assignPopup.classList.add("hidePopup");
@@ -288,11 +305,13 @@ function openMoreInfoModal(worker) {
 
     const expContainer = document.getElementById("moreInfoExpList");
     expContainer.innerHTML = "";
-    worker.experience.forEach(exp => {
+    for (let i = 0; i < worker.experience.length; i++) {
+        let exp = worker.experience[i];
         let item = document.createElement("div");
         item.textContent = `${exp.jobName} — ${exp.companyName} (${exp.periode})`;
+
         expContainer.appendChild(item);
-    });
+    }
 
     document.getElementById("moreInfoModal").classList.remove("hidePopup");
 }
