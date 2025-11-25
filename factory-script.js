@@ -27,6 +27,8 @@ const roomRoles = [
     ["sécurité", "Manager", "Nettoyage"]         // Salle de sécurité
 ];
 
+const roomsLimit = [5, 2, 4, 6, 3, 2];
+
 ///=====>>>> for open the big form <<<<=====\\\
 openForm.addEventListener("click", function () {
     bigModal.classList.remove("hideModel");
@@ -258,9 +260,20 @@ for (let i = 0; i < rooms.length; i++) {
 
                 workerDiv.addEventListener("click", function () {
                     let roomContainerCards = room.querySelector(".effectWorkersContainer");
+                    //for limit check
+                    let currentCount = roomContainerCards.children.length;
+                    let limit = roomsLimit[i];
+                    
+                    if(currentCount >= limit){
+                        alert("Cette salle est déjà pleine.");
+                        return;
+                    }
+
                     // create card inside room
                     let workerCard = createRoomWorkerCard(worker);
                     roomContainerCards.appendChild(workerCard);
+
+                    
 
                     // remove from sidebar
                     let sidebarCards = nonEffectueContainer.querySelectorAll(".divContainCard");
@@ -275,8 +288,6 @@ for (let i = 0; i < rooms.length; i++) {
 
                     // update arrays
                     worker.zone = i;
-                    // nonEffectueArray = nonEffectueArray.filter(w => w !== worker);
-                    // workerDiv.remove();
 
                     // close btn to return card to nonEffectue
                     const closeBtn = workerCard.querySelector(".closeBtnInsideRoom");
